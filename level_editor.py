@@ -1,5 +1,7 @@
 import pygame
 import button
+import csv
+import pickle #Commenting out the original Save and Load while-loops
 
 pygame.init()
 #[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -134,9 +136,33 @@ while run:
 	draw_text(f'Level: {level}', font, WHITE, 10,SCREEN_HEIGHT + LOWER_MARGIN - 90)
 	draw_text('Press Up or Down to change Level', font, WHITE, 10,SCREEN_HEIGHT + LOWER_MARGIN - 60)
 	#Svae and Load data
-	save_button.draw(screen)
-	load_button.draw(screen)
-	
+	if save_button.draw(screen):
+		#Save level data NOTE:NO CONFIRMATION GIVEN AFTER SAVE
+		pickle_out = open(f'level{level}_data', 'wb')
+		pickle.dump(world_data, pickle_out)
+		pickle_out.close()
+		# with open(f'level{level}_data.csv', 'w', newline='') as csvfile:
+		# 	writer = csv.writer(csvfile, delimiter=',')
+		# 	for row in world_data:
+		# 		writer.writerow(row)
+
+	if load_button.draw(screen):
+		#Load in level data and reset scroll back to start of level
+		#NOTE: This error handling will erase bottom floor if a level does not exist when loading.  Just re-draw bottom manually
+		try:
+		 scroll = 0
+		 world_data = []
+		 pickle_in = open(f'level{level}_data', 'rb')
+		 world_data = pickle.load(pickle_in)
+		except  FileNotFoundError:
+			pass
+		# with open(f'level{level}_data.csv', 'r', newline='') as csvfile:
+		# 	reader = csv.reader(csvfile, delimiter=',')
+		# 	for row in world_data:
+		# 		for x, row in enumerate(reader):
+		# 			for y, tile in enumerate(row):
+		# 				world_data[x][y] = int(tile)
+
 	#Draw Tile Panel and Tiles
 	pygame.draw.rect(screen, GREEN, (SCREEN_WIDTH,0,SIDE_MARGIN,SCREEN_HEIGHT))
 
