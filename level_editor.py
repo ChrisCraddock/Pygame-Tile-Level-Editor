@@ -25,7 +25,7 @@ pygame.display.set_caption('Level Editor')
 ROWS = 16
 MAX_COL = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS #Determines how big each of the squares on the grid are
-TILE_FOLDER = 'C:/Users/cmc03/Desktop/TwitchPython/PyGames/Pygame-Tile-Level-Editor/img/tile' #MUST KNOW AND CHANGE BEFORE RUNNING
+TILE_FOLDER = 'C:/Users/path/to/Pygame-Tile-Level-Editor/img/tile' #MUST KNOW AND CHANGE BEFORE RUNNING
 TILE_COUNT = 21 #MUST KNOW AND CHANGE BEFORE RUNNING
 current_tile = 0
 scroll_left = False
